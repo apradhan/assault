@@ -6,11 +6,14 @@ import requests
 # Make the request and return the results
 def fetch(url):
     """ Make the request and return the results """
-    pass
+    started_at = time.monotonic()
+    response = requests.get(url)
+    request_time = time.monotonic() - started_at
+    return {"status_code": response.status_code, "request_time": request_time}
 
 
 # A function to take unmade requests from a queue, perform the work, and add result to the queue
-def worker(name, queue, results):
+async def worker(name, queue, results):
     """ A function to take unmade requests from a queue, perform the work, and add result to the queue """
     loop = asyncio.get_event_loop()
     while True:
